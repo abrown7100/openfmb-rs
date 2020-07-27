@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use futures::{
-    future::{self, BoxFuture},
-    stream, FutureExt, StreamExt,
+    stream, StreamExt,
 };
 use openfmb_ops_protobuf::openfmb::{
     commonmodule::DbPosKind,
@@ -10,11 +9,7 @@ use openfmb_ops_protobuf::openfmb::{
     },
 };
 use openfmb_protobuf_ext::switch::SwitchControlExt;
-use std::time::Duration;
 use uuid::Uuid;
-
-/// Error type erased return result, for simplified returns
-pub type SwitchResult<T> = Result<T, Box<dyn std::error::Error>>;
 
 /// Control and wait on updates from a switch
 ///
