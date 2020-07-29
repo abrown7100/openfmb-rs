@@ -1,7 +1,5 @@
 use crate::prelude::*;
-use futures::{
-    stream, StreamExt,
-};
+use futures::{stream, StreamExt};
 use openfmb_ops_protobuf::openfmb::{
     commonmodule::DbPosKind,
     switchmodule::{
@@ -114,8 +112,52 @@ where
     ///
     /// ```
     /// let position = myswitch.position().await?;
-    /// while let Some(Ok(DbPosKind::Open)) = position.next() {
+    /// while let Some(Ok(DbPosKind::Open)) = position.next().await {
     ///   myswitch.control(SwitchControlProfile::builder().set_position(DbPosKind::Closed));
+    /// }
+    /// ```
+    pub async fn position(&mut self) -> SubscribeResult<DbPosKind> {
+        let status = self.status()?.map(|s| match s {
+            Ok(s) => Ok(DbPosKind::from_i32(
+                s.switch_status
+                    .unwrap()
+                    .switch_status_xswi
+                    .unwrap()
+                    .pos
+                    .unwrap()
+                    .st_val,
+            )
+            .unwrap()),
+            Err(err) => Err(err),
+        });
+        let event = self.event()?.map(|s| match s {
+            Ok(s) => Ok(DbPosKind::from_i32(
+                s.switch_event
+                    .unwrap()
+                    .switch_event_xswi
+                    .unwrap()
+                    .pos
+                    .unwrap()
+                    .st_val,
+            )
+            .unwrap()),
+            Err(err) => Err(err),
+        });
+        Ok(Box::pin(stream::select(status, event)))
+    }
+
+    /// A stream of the switch dynamic test updates
+    ///
+    /// These may come from either SwitchEventProfile *or* SwitchStatusProfile
+    /// messages so we subscribe to both streams and merge them together with
+    /// some combinators.
+    ///
+    /// Can be used directly in logic to wait for a dynamic test change
+    ///
+    /// ```
+    /// let dynamic_test = myswitch.dynamic_test().await?;
+    /// while let Some(Ok(DynamicTest::None)) = dynamic_test.next().await {
+    ///   myswitch.control(SwitchControlProfile::builder().set_synchro_check(true);
     /// }
     /// ```
     pub async fn position(&mut self) -> SubscribeResult<DbPosKind> {
@@ -152,7 +194,10 @@ where
         format!("{}", self.mrid.to_hyphenated())
     }
 
-    async fn publish_control(&mut self, msg: SwitchControlProfile) -> PublishResult<()> {
+    /// Send a control message to the device asynchronously
+    ///
+    /// Awaits on publishing but no change awaited on.
+    pub async fn control(&mut self, msg: SwitchControlProfile) -> PublishResult<()> {
         Ok(self
             .bus
             .publish(&topic("SwitchControlProfile", &self.mrid), msg)
@@ -166,7 +211,7 @@ where
         let mut is_open = self.is_open().await?;
         while let Some(Ok(true)) = is_open.next().await {
             let msg = SwitchControlProfile::switch_close_msg(&self.mrid_as_string());
-            self.publish_control(msg).await?
+            self.control(msg).await?
         }
         Ok(())
     }
@@ -178,7 +223,7 @@ where
         let mut is_closed = self.is_closed().await?;
         while let Some(Ok(true)) = is_closed.next().await {
             let msg = SwitchControlProfile::switch_open_msg(&self.mrid_as_string());
-            self.publish_control(msg).await?;
+            self.control(msg).await?;
         }
         Ok(())
     }
@@ -190,5 +235,37 @@ where
         } else {
             Ok(self.close().await?)
         }
+    }
+
+    /// Set the switch synchro check dynamic test
+    pub async fn set_synchro_check(&mut self, synchro_check: bool) -> ControlResult<()> {
+        if synchro_check {
+            self.enable_synchro_check()
+        } else {
+            self.disable_synchro_check()
+        }
+    }
+
+    /// Enable the switch synchro check dynamic test
+    pub async fn enable_synchro_check(&mut self) {
+        let mut dynamic_test = self.dynamic_test().await?;
+        while let Some(Ok(DynamicTest::None)) = dynamic_test.next().await {
+            let msg = SwitchControlProfile::switch_synchro_msg(&self.mrid_as_string(), true);
+            self.control(msg).await?;
+        }
+        Ok(())
+    }
+
+    /// Disable the switch synchro check dynamic test
+    pub async fn disable_synchro_check(&mut self) {
+        let mut dynamic_test = self.dynamic_test().await?;
+        while let Some(Ok(testing)) = dynamic_test.next().await {
+            if testing == DynamicTestKind::None {
+                break;
+            }
+            let msg = SwitchControlProfile::switch_synchro_msg(&self.mrid_as_string(), false);
+            self.control(msg).await?;
+        }
+        Ok(())
     }
 }
