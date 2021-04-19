@@ -1,17 +1,13 @@
 [package]
 name = "openfmb-messages-ext"
-version = "0.0.1"
+version = "0.1.0"
 authors = ["Tupshin Harper <tupshin@openenergysolutionsinc.com>", "Tom Burdick <tom@openenergysolutionsinc.com>"]
 edition = "2018"
 
 [dependencies]
 openfmb-messages = { path = "../openfmb-messages"}
-log = "0.4.8"
-uuid =  { version = "0.8.1", features = ["serde", "v4"] }
-snafu = "0.6.6"
-chrono = "0.4.11"
-
-[dev-dependencies.cargo-husky]
-version = "1"
-default-features = false
-features = ["precommit-hook", "prepush-hook", "run-cargo-check", "run-cargo-fmt", "run-cargo-clippy"]
+log = "0.4"
+uuid =  { version = "0.8", features = ["serde", "v4"] }
+anyhow = "1.0"
+thiserror = "1.0"
+chrono = "0.4"

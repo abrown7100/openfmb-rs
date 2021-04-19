@@ -7,7 +7,7 @@ use openfmb_messages::{
     commonmodule::{MessageInfo, ReadingMessageInfo},
     switchmodule::SwitchReadingProfile,
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use std::str::FromStr;
 use uuid::Uuid;
 

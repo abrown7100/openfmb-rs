@@ -7,7 +7,7 @@ use openfmb_messages::{
     commonmodule::{MessageInfo, StatusMessageInfo},
     switchmodule::SwitchStatusProfile,
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use std::str::FromStr;
 use uuid::Uuid;
 

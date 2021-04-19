@@ -8,7 +8,7 @@ use openfmb_messages::{
     commonmodule::{MessageInfo, ReadingMessageInfo},
     generationmodule::GenerationReadingProfile,
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use uuid::Uuid;
 
 use crate::{error::*, OpenFMBExt, OpenFMBExtReading, ReadingProfileExt};

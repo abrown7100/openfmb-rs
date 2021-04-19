@@ -12,7 +12,7 @@ use openfmb_messages::commonmodule::{
     ControlMessageInfo, IdentifiedObject, MessageInfo, ReadingMessageInfo, StatusMessageInfo, EventMessageInfo,
     Timestamp,
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use uuid::Uuid;
 
 pub mod breaker;

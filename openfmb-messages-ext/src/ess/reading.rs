@@ -5,7 +5,7 @@
 use std::str::FromStr;
 
 use openfmb_messages::{commonmodule::MessageInfo, essmodule::EssReadingProfile};
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use uuid::Uuid;
 
 use crate::{error::*, OpenFMBExt, ReadingProfileExt};

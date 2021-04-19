@@ -14,7 +14,7 @@ use openfmb_messages::{
         SwitchDiscreteControlXswi,
     },
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use std::{str::FromStr, time::SystemTime};
 use uuid::Uuid;
 

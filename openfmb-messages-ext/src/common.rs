@@ -8,7 +8,7 @@ use openfmb_messages::commonmodule::{
     LogicalNode, LogicalNodeForEventAndStatus, MessageInfo, Meter, NamedObject, ReadingMessageInfo,
     StatusMessageInfo,
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use uuid::Uuid;
 
 /// Has IdentifiedObject

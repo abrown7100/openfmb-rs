@@ -13,7 +13,7 @@ use openfmb_messages::{
         SolarInverter, SolarPoint,
     },
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use std::{str::FromStr, time::SystemTime};
 use uuid::Uuid;
 

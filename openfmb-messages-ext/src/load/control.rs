@@ -18,7 +18,7 @@ use openfmb_messages::{
         LoadPoint,
     },
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use std::str::FromStr;
 use uuid::Uuid;
 

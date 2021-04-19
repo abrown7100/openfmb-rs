@@ -2,21 +2,20 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-use snafu::Snafu;
+use thiserror::Error;
 
 /// OpenFMBError type provides a very specific cause for a failure
 ///
 /// This is useful over the typical Option<T> in many scenarios as a deeply
 /// nested Option<T> may fail at one of many levels of Option<T> unwrapping,
 /// instead we provide a Result<T, E> with an error that self describes what was missing.
-#[derive(Debug, Snafu)]
-#[snafu(visibility = "pub(crate)")]
+#[derive(Error, Debug)]
 pub enum OpenFMBError {
-    #[snafu(display("Unsupported OpenFMBProfile"))]
+    #[error("Unsupported OpenFMBProfile: {profile}")]
     UnsupportedOpenFMBProfileError {
         profile: String,
     },
-    #[snafu(display("Unsupported OpenFMB type"))]
+    #[error("Unsupported OpenFMB type: {fmb_type}")]
     UnsupportedOpenFMBTypeError {
         fmb_type: String,
     },
@@ -80,10 +79,11 @@ pub enum OpenFMBError {
     NoEventMessageInfo,
     NoCapBankSystem,
     NoApplicationSystem,
-    #[snafu(display("Actor System Error"))]
+    #[error("I/O Error: {source}")]
     IOError {
         source: std::io::Error,
     },
+    #[error("UUID Error: {source}")]
     UuidError {
         source: uuid::Error,
     },

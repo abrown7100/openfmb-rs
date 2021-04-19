@@ -10,7 +10,7 @@ use openfmb_messages::{
 };
 
 use crate::ReadingProfileExt;
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use uuid::Uuid;
 
 use crate::{error::*, OpenFMBExt, OpenFMBExtReading};

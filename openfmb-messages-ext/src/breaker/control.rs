@@ -6,7 +6,7 @@ use openfmb_messages::{
     commonmodule::*,
     breakermodule::*,
 };
-use snafu::{OptionExt, ResultExt};
+use anyhow::Context;
 use std::{str::FromStr, time::SystemTime};
 use uuid::Uuid;
 
