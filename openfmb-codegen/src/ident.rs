@@ -4,7 +4,7 @@
 
 //! Utility functions for working with identifiers.
 
-use heck::{ToUpperCamelCase, ToShoutySnakeCase, ToSnakeCase};
+use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
 
 pub fn to_shouty_snake(s: &str) -> String {
     s.to_shouty_snake_case()
