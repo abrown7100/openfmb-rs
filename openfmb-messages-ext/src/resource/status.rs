@@ -16,7 +16,7 @@ impl OpenFMBExtStatus for ResourceStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -29,10 +29,10 @@ impl OpenFMBExt for ResourceStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -44,23 +44,23 @@ impl OpenFMBExt for ResourceStatusProfile {
             &self
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -83,13 +83,13 @@ impl ResourceStatusExt for ResourceStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?
+            .context(NoMessageInfoSnafu)?
             .identified_object
             .as_ref()
-            .context(NoIdentifiedObject)?
+            .context(NoIdentifiedObjectSnafu)?
             .name
             .clone()
             .unwrap_or("".to_string()))
@@ -99,13 +99,13 @@ impl ResourceStatusExt for ResourceStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?
+            .context(NoMessageInfoSnafu)?
             .identified_object
             .as_ref()
-            .context(NoIdentifiedObject)?
+            .context(NoIdentifiedObjectSnafu)?
             .description
             .clone()
             .unwrap_or("".to_string()))
@@ -115,7 +115,7 @@ impl ResourceStatusExt for ResourceStatusProfile {
         Ok(self
             .resource_status
             .as_ref()
-            .context(NoResourceStatus)?
+            .context(NoResourceStatusSnafu)?
             .string_event_and_status_ggio
             .clone())
     }
@@ -124,7 +124,7 @@ impl ResourceStatusExt for ResourceStatusProfile {
         Ok(self
             .resource_status
             .as_ref()
-            .context(NoResourceStatus)?
+            .context(NoResourceStatusSnafu)?
             .analog_event_and_status_ggio
             .clone())
     }
@@ -133,7 +133,7 @@ impl ResourceStatusExt for ResourceStatusProfile {
         Ok(self
             .resource_status
             .as_ref()
-            .context(NoResourceStatus)?
+            .context(NoResourceStatusSnafu)?
             .integer_event_and_status_ggio
             .clone())
     }
@@ -142,7 +142,7 @@ impl ResourceStatusExt for ResourceStatusProfile {
         Ok(self
             .resource_status
             .as_ref()
-            .context(NoResourceStatus)?
+            .context(NoResourceStatusSnafu)?
             .boolean_event_and_status_ggio
             .clone())
     }
@@ -154,16 +154,16 @@ impl ResourceStatusExt for ResourceStatusProfile {
             if let Ok(name) = item
                 .logical_node
                 .as_ref()
-                .context(NoLogicalNode)?
+                .context(NoLogicalNodeSnafu)?
                 .identified_object
                 .as_ref()
-                .context(NoIdentifiedObject)?
+                .context(NoIdentifiedObjectSnafu)?
                 .name
                 .as_ref()
-                .context(NoName)
+                .context(NoNameSnafu)
             {
                 if key == name.to_string() {
-                    return Ok(item.str_in.as_ref().context(NoVss)?.st_val.clone());
+                    return Ok(item.str_in.as_ref().context(NoVssSnafu)?.st_val.clone());
                 }
             }
         }
@@ -178,16 +178,16 @@ impl ResourceStatusExt for ResourceStatusProfile {
             if let Ok(name) = item
                 .logical_node
                 .as_ref()
-                .context(NoLogicalNode)?
+                .context(NoLogicalNodeSnafu)?
                 .identified_object
                 .as_ref()
-                .context(NoIdentifiedObject)?
+                .context(NoIdentifiedObjectSnafu)?
                 .name
                 .as_ref()
-                .context(NoName)
+                .context(NoNameSnafu)
             {
                 if key == name.to_string() {
-                    return Ok(item.an_in.as_ref().context(NoMv)?.mag);
+                    return Ok(item.an_in.as_ref().context(NoMvSnafu)?.mag);
                 }
             }
         }
@@ -202,16 +202,16 @@ impl ResourceStatusExt for ResourceStatusProfile {
             if let Ok(name) = item
                 .logical_node
                 .as_ref()
-                .context(NoLogicalNode)?
+                .context(NoLogicalNodeSnafu)?
                 .identified_object
                 .as_ref()
-                .context(NoIdentifiedObject)?
+                .context(NoIdentifiedObjectSnafu)?
                 .name
                 .as_ref()
-                .context(NoName)
+                .context(NoNameSnafu)
             {
                 if key == name.to_string() {
-                    return Ok(item.int_in.as_ref().context(NoStatusIns)?.st_val);
+                    return Ok(item.int_in.as_ref().context(NoStatusInsSnafu)?.st_val);
                 }
             }
         }
@@ -226,16 +226,16 @@ impl ResourceStatusExt for ResourceStatusProfile {
             if let Ok(name) = item
                 .logical_node
                 .as_ref()
-                .context(NoLogicalNode)?
+                .context(NoLogicalNodeSnafu)?
                 .identified_object
                 .as_ref()
-                .context(NoIdentifiedObject)?
+                .context(NoIdentifiedObjectSnafu)?
                 .name
                 .as_ref()
-                .context(NoName)
+                .context(NoNameSnafu)
             {
                 if key == name.to_string() {
-                    return Ok(item.ind.as_ref().context(NoMv)?.st_val);
+                    return Ok(item.ind.as_ref().context(NoMvSnafu)?.st_val);
                 }
             }
         }

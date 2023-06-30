@@ -52,29 +52,29 @@ impl OpenFMBExt for SwitchDiscreteControlProfile {
             &self
                 .protected_switch
                 .as_ref()
-                .context(NoProtectedSwitch)?
+                .context(NoProtectedSwitchSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .protected_switch
             .as_ref()
-            .context(NoProtectedSwitch)?
+            .context(NoProtectedSwitchSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 

@@ -10,7 +10,7 @@ use snafu::Snafu;
 /// nested Option<T> may fail at one of many levels of Option<T> unwrapping,
 /// instead we provide a Result<T, E> with an error that self describes what was missing.
 #[derive(Debug, Snafu)]
-#[snafu(visibility = "pub(crate)")]
+#[snafu(visibility(pub(crate)))]
 pub enum OpenFMBError {
     #[snafu(display("Unsupported OpenFMBProfile"))]
     UnsupportedOpenFMBProfileError {

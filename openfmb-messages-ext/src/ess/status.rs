@@ -22,19 +22,19 @@ impl OpenFMBExt for EssStatusProfile {
         match self
             .ess_status
             .as_ref()
-            .context(NoEssStatus)?
+            .context(NoEssStatusSnafu)?
             .ess_status_zgen
             .as_ref()
-            .context(NoEssStatus)?
+            .context(NoEssStatusSnafu)?
             .e_ss_event_and_status_zgen
             .as_ref()
-            .context(NoEssEventAndStatusZGen)?
+            .context(NoEssEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".into()),
@@ -51,10 +51,10 @@ impl OpenFMBExt for EssStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -66,29 +66,29 @@ impl OpenFMBExt for EssStatusProfile {
             &self
                 .ess
                 .as_ref()
-                .context(NoEss)?
+                .context(NoEssSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .ess
             .as_ref()
-            .context(NoEss)?
+            .context(NoEssSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -97,7 +97,7 @@ impl OpenFMBExtStatus for EssStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -113,13 +113,13 @@ impl EssStatusExt for EssStatusProfile {
         Ok(self
             .ess_status
             .as_ref()
-            .context(NoEssStatus)?
+            .context(NoEssStatusSnafu)?
             .ess_status_zbat
             .as_ref()
-            .context(NoEssStatusZBat)?
+            .context(NoEssStatusZBatSnafu)?
             .soc
             .as_ref()
-            .context(NoSoc)?
+            .context(NoSocSnafu)?
             .mag
             / 100.0)
     }
@@ -128,38 +128,38 @@ impl EssStatusExt for EssStatusProfile {
         Ok(self
             .ess_status
             .as_ref()
-            .context(NoEssStatus)?
+            .context(NoEssStatusSnafu)?
             .ess_status_zgen
             .as_ref()
-            .context(NoEssStatusZGen)?
+            .context(NoEssStatusZGenSnafu)?
             .e_ss_event_and_status_zgen
             .as_ref()
-            .context(NoEssEventAndStatusZGen)?
+            .context(NoEssEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .mode
             .clone()
-            .context(NoMode)?)
+            .context(NoModeSnafu)?)
     }
 
     fn ess_state(&self) -> OpenFMBResult<StateKind> {
         Ok(self
             .ess_status
             .as_ref()
-            .context(NoEssStatus)?
+            .context(NoEssStatusSnafu)?
             .ess_status_zgen
             .as_ref()
-            .context(NoEssStatusZGen)?
+            .context(NoEssStatusZGenSnafu)?
             .e_ss_event_and_status_zgen
             .as_ref()
-            .context(NoEssEventAndStatusZGen)?
+            .context(NoEssEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)?
+            .context(NoStateSnafu)?
             .value())
     }
 
@@ -167,16 +167,16 @@ impl EssStatusExt for EssStatusProfile {
         Ok(self
             .ess_status
             .as_ref()
-            .context(NoEssStatus)?
+            .context(NoEssStatusSnafu)?
             .ess_status_zgen
             .as_ref()
-            .context(NoEssStatusZGen)?
+            .context(NoEssStatusZGenSnafu)?
             .e_ss_event_and_status_zgen
             .as_ref()
-            .context(NoEssEventAndStatusZGen)?
+            .context(NoEssEventAndStatusZGenSnafu)?
             .gn_syn_st
             .as_ref()
-            .context(NoEssGnSyncSt)?
+            .context(NoEssGnSyncStSnafu)?
             .st_val)
     }
 }

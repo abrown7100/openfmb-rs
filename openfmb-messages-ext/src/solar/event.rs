@@ -16,7 +16,7 @@ impl OpenFMBExtEvent for SolarEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?)
+            .context(NoEventMessageInfoSnafu)?)
     }
 }
 
@@ -25,19 +25,19 @@ impl OpenFMBExt for SolarEventProfile {
         match self
             .solar_event
             .as_ref()
-            .context(NoSolarEvent)?
+            .context(NoSolarEventSnafu)?
             .solar_event_zgen
             .as_ref()
-            .context(NoSolarEventZGen)?
+            .context(NoSolarEventZGenSnafu)?
             .solar_event_and_status_zgen
             .as_ref()
-            .context(NoSolarEventAndStatusZGen)?
+            .context(NoSolarEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".to_string()),
@@ -54,10 +54,10 @@ impl OpenFMBExt for SolarEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?
+            .context(NoEventMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -69,28 +69,28 @@ impl OpenFMBExt for SolarEventProfile {
             &self
                 .solar_inverter
                 .as_ref()
-                .context(NoSolarInverter)?
+                .context(NoSolarInverterSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .solar_inverter
             .as_ref()
-            .context(NoSolarInverter)?
+            .context(NoSolarInverterSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }

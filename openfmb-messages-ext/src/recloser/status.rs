@@ -19,7 +19,7 @@ impl OpenFMBExtStatus for RecloserStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -28,16 +28,16 @@ impl OpenFMBExt for RecloserStatusProfile {
         match self
             .recloser_status
             .as_ref()
-            .context(NoRecloserStatus)?
+            .context(NoRecloserStatusSnafu)?
             .status_and_event_xcbr
             .as_ref()
-            .context(NoStatusAndEventXcbr)?
+            .context(NoStatusAndEventXcbrSnafu)?
             .pos
             .as_ref()
-            .context(NoPos)?
+            .context(NoPosSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)
+            .context(NoPhs3Snafu)
         {
             Ok(phs3) => match phs3.st_val {
                 0 => Ok("Undefined".into()),
@@ -55,10 +55,10 @@ impl OpenFMBExt for RecloserStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -70,29 +70,29 @@ impl OpenFMBExt for RecloserStatusProfile {
             &self
                 .recloser
                 .as_ref()
-                .context(NoRecloser)?
+                .context(NoRecloserSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .recloser
             .as_ref()
-            .context(NoRecloser)?
+            .context(NoRecloserSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -106,61 +106,61 @@ impl Position for RecloserStatusProfile {
             Phase::Phs3 => {
                 self.recloser_status
                     .as_ref()
-                    .context(NoRecloserStatus)?
+                    .context(NoRecloserStatusSnafu)?
                     .status_and_event_xcbr
                     .as_ref()
-                    .context(NoStatusAndEventXcbr)?
+                    .context(NoStatusAndEventXcbrSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs3
                     .as_ref()
-                    .context(NoPhs3)?
+                    .context(NoPhs3Snafu)?
                     .st_val
             }
             Phase::PhsA => {
                 self.recloser_status
                     .as_ref()
-                    .context(NoRecloserStatus)?
+                    .context(NoRecloserStatusSnafu)?
                     .status_and_event_xcbr
                     .as_ref()
-                    .context(NoStatusAndEventXcbr)?
+                    .context(NoStatusAndEventXcbrSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_a
                     .as_ref()
-                    .context(NoPhsA)?
+                    .context(NoPhsASnafu)?
                     .st_val
             }
             Phase::PhsB => {
                 self.recloser_status
                     .as_ref()
-                    .context(NoRecloserStatus)?
+                    .context(NoRecloserStatusSnafu)?
                     .status_and_event_xcbr
                     .as_ref()
-                    .context(NoStatusAndEventXcbr)?
+                    .context(NoStatusAndEventXcbrSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_b
                     .as_ref()
-                    .context(NoPhsB)?
+                    .context(NoPhsBSnafu)?
                     .st_val
             }
             Phase::PhsC => {
                 self.recloser_status
                     .as_ref()
-                    .context(NoRecloserStatus)?
+                    .context(NoRecloserStatusSnafu)?
                     .status_and_event_xcbr
                     .as_ref()
-                    .context(NoStatusAndEventXcbr)?
+                    .context(NoStatusAndEventXcbrSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_c
                     .as_ref()
-                    .context(NoPhsC)?
+                    .context(NoPhsCSnafu)?
                     .st_val
             }
         };

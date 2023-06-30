@@ -20,10 +20,10 @@ impl OpenFMBExt for EssReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoReadingMessageInfo)?
+            .context(NoReadingMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -35,29 +35,29 @@ impl OpenFMBExt for EssReadingProfile {
             &self
                 .ess
                 .as_ref()
-                .context(NoEss)?
+                .context(NoEssSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .ess
             .as_ref()
-            .context(NoEss)?
+            .context(NoEssSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -72,19 +72,19 @@ impl EssReadingExt for EssReadingProfile {
         Ok(self
             .ess_reading
             .as_ref()
-            .context(NoEssReading)?
+            .context(NoEssReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .w
             .as_ref()
-            .context(NoW)?
+            .context(NoWSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag)
     }
 
@@ -92,19 +92,19 @@ impl EssReadingExt for EssReadingProfile {
         Ok(self
             .ess_reading
             .as_ref()
-            .context(NoEssReading)?
+            .context(NoEssReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .v_ar
             .as_ref()
-            .context(NoW)?
+            .context(NoWSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag)
     }
 }

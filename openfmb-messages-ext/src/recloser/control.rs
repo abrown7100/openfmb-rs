@@ -14,19 +14,19 @@ impl OpenFMBExt for RecloserDiscreteControlProfile {
         let state = if self
             .recloser_discrete_control
             .as_ref()
-            .context(NoBreakerDiscreteControl)?
+            .context(NoBreakerDiscreteControlSnafu)?
             .recloser_discrete_control_xcbr
             .as_ref()
-            .context(NoBreakerDiscreteControlXcbr)?
+            .context(NoBreakerDiscreteControlXcbrSnafu)?
             .discrete_control_xcbr
             .as_ref()
-            .context(NoDiscreteControlXcbr)?
+            .context(NoDiscreteControlXcbrSnafu)?
             .pos
             .as_ref()
-            .context(NoPos)?
+            .context(NoPosSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)?
+            .context(NoPhs3Snafu)?
             .ctl_val
         {
             "Request Closed"
@@ -49,29 +49,29 @@ impl OpenFMBExt for RecloserDiscreteControlProfile {
             &self
                 .recloser
                 .as_ref()
-                .context(NoRecloser)?
+                .context(NoRecloserSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .recloser
             .as_ref()
-            .context(NoRecloser)?
+            .context(NoRecloserSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 

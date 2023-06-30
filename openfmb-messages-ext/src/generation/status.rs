@@ -21,19 +21,19 @@ impl OpenFMBExt for GenerationStatusProfile {
         match self
             .generation_status
             .as_ref()
-            .context(NoGenerationStatus)?
+            .context(NoGenerationStatusSnafu)?
             .generation_status_zgen
             .as_ref()
-            .context(NoGenerationStatusZGen)?
+            .context(NoGenerationStatusZGenSnafu)?
             .generation_event_and_status_zgen
             .as_ref()
-            .context(NoGenerationEventAndStatusZGen)?
+            .context(NoGenerationEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".into()),
@@ -50,10 +50,10 @@ impl OpenFMBExt for GenerationStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -65,29 +65,29 @@ impl OpenFMBExt for GenerationStatusProfile {
             &self
                 .generating_unit
                 .as_ref()
-                .context(NoGeneratingUnit)?
+                .context(NoGeneratingUnitSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .generating_unit
             .as_ref()
-            .context(NoGeneratingUnit)?
+            .context(NoGeneratingUnitSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -96,7 +96,7 @@ impl OpenFMBExtStatus for GenerationStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -110,9 +110,9 @@ impl GenerationStatusExt for GenerationStatusProfile {
             Ok(self
                 .generation_status
                 .clone()
-                .context(NoGenerationStatus)?
+                .context(NoGenerationStatusSnafu)?
                 .generation_status_zgen
-                .context(NoGenerationStatusZGen)?
+                .context(NoGenerationStatusZGenSnafu)?
                 .generation_event_and_status_zgen
                 .unwrap()
                 .point_status

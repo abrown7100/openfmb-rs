@@ -20,10 +20,10 @@ impl OpenFMBExt for RecloserReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -35,29 +35,29 @@ impl OpenFMBExt for RecloserReadingProfile {
             &self
                 .recloser
                 .as_ref()
-                .context(NoRecloser)?
+                .context(NoRecloserSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .recloser
             .as_ref()
-            .context(NoRecloser)?
+            .context(NoRecloserSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -66,7 +66,7 @@ impl OpenFMBExtReading for RecloserReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -91,19 +91,19 @@ impl RecloserReadingExt for RecloserReadingProfile {
                 .recloser_reading
                 .first()
                 .as_ref()
-                .context(NoRecloserReading)?
+                .context(NoRecloserReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .w
                 .as_ref()
-                .context(NoW)?
+                .context(NoWSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRecloserReading)
@@ -115,19 +115,19 @@ impl RecloserReadingExt for RecloserReadingProfile {
                 .recloser_reading
                 .first()
                 .as_ref()
-                .context(NoRecloserReading)?
+                .context(NoRecloserReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .v_ar
                 .as_ref()
-                .context(NoW)?
+                .context(NoWSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRecloserReading)
@@ -139,19 +139,19 @@ impl RecloserReadingExt for RecloserReadingProfile {
                 .recloser_reading
                 .get(1)
                 .as_ref()
-                .context(NoRecloserReading)?
+                .context(NoRecloserReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .w
                 .as_ref()
-                .context(NoW)?
+                .context(NoWSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRecloserReading)
@@ -163,19 +163,19 @@ impl RecloserReadingExt for RecloserReadingProfile {
                 .recloser_reading
                 .get(1)
                 .as_ref()
-                .context(NoRecloserReading)?
+                .context(NoRecloserReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .v_ar
                 .as_ref()
-                .context(NoW)?
+                .context(NoWSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRecloserReading)
@@ -187,19 +187,19 @@ impl RecloserReadingExt for RecloserReadingProfile {
                 .recloser_reading
                 .first()
                 .as_ref()
-                .context(NoRecloserReading)?
+                .context(NoRecloserReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .ph_v
                 .as_ref()
-                .context(NoValue)?
+                .context(NoValueSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRecloserReading)
@@ -211,19 +211,19 @@ impl RecloserReadingExt for RecloserReadingProfile {
                 .recloser_reading
                 .get(1)
                 .as_ref()
-                .context(NoRecloserReading)?
+                .context(NoRecloserReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .ph_v
                 .as_ref()
-                .context(NoValue)?
+                .context(NoValueSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRecloserReading)
@@ -235,19 +235,19 @@ impl RecloserReadingExt for RecloserReadingProfile {
                 .recloser_reading
                 .first()
                 .as_ref()
-                .context(NoRecloserReading)?
+                .context(NoRecloserReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .a
                 .as_ref()
-                .context(NoValue)?
+                .context(NoValueSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRecloserReading)
@@ -259,19 +259,19 @@ impl RecloserReadingExt for RecloserReadingProfile {
                 .recloser_reading
                 .get(1)
                 .as_ref()
-                .context(NoRecloserReading)?
+                .context(NoRecloserReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .a
                 .as_ref()
-                .context(NoValue)?
+                .context(NoValueSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRecloserReading)

@@ -16,7 +16,7 @@ impl OpenFMBExtEvent for CircuitSegmentEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?)
+            .context(NoEventMessageInfoSnafu)?)
     }
 }
 
@@ -29,10 +29,10 @@ impl OpenFMBExt for CircuitSegmentEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?
+            .context(NoEventMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -44,22 +44,22 @@ impl OpenFMBExt for CircuitSegmentEventProfile {
             &self
                 .application_system
                 .as_ref()
-                .context(NoApplicationSystem)?
+                .context(NoApplicationSystemSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .application_system
             .as_ref()
-            .context(NoApplicationSystem)?
+            .context(NoApplicationSystemSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }

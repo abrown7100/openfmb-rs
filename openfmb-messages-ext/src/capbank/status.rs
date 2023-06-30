@@ -16,7 +16,7 @@ impl OpenFMBExtStatus for CapBankStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -29,10 +29,10 @@ impl OpenFMBExt for CapBankStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -44,29 +44,29 @@ impl OpenFMBExt for CapBankStatusProfile {
             &self
                 .cap_bank_system
                 .as_ref()
-                .context(NoCapBankSystem)?
+                .context(NoCapBankSystemSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .cap_bank_system
             .as_ref()
-            .context(NoCapBankSystem)?
+            .context(NoCapBankSystemSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -80,61 +80,61 @@ impl Position for CapBankStatusProfile {
             Phase::Phs3 => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs3
                     .as_ref()
-                    .context(NoPhs3)?
+                    .context(NoPhs3Snafu)?
                     .st_val
             }
             Phase::PhsA => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_a
                     .as_ref()
-                    .context(NoPhsA)?
+                    .context(NoPhsASnafu)?
                     .st_val
             }
             Phase::PhsB => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_b
                     .as_ref()
-                    .context(NoPhsB)?
+                    .context(NoPhsBSnafu)?
                     .st_val
             }
             Phase::PhsC => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_c
                     .as_ref()
-                    .context(NoPhsC)?
+                    .context(NoPhsCSnafu)?
                     .st_val
             }
         };
@@ -165,61 +165,61 @@ impl CapBankStatusExt for CapBankStatusProfile {
             Phase::Phs3 => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .temp_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs3
                     .as_ref()
-                    .context(NoPhs3)?
+                    .context(NoPhs3Snafu)?
                     .st_val
             }
             Phase::PhsA => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .temp_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_a
                     .as_ref()
-                    .context(NoPhsA)?
+                    .context(NoPhsASnafu)?
                     .st_val
             }
             Phase::PhsB => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .temp_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_b
                     .as_ref()
-                    .context(NoPhsB)?
+                    .context(NoPhsBSnafu)?
                     .st_val
             }
             Phase::PhsC => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .temp_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_c
                     .as_ref()
-                    .context(NoPhsC)?
+                    .context(NoPhsCSnafu)?
                     .st_val
             }
         })
@@ -230,61 +230,61 @@ impl CapBankStatusExt for CapBankStatusProfile {
             Phase::Phs3 => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .v_ar_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs3
                     .as_ref()
-                    .context(NoPhs3)?
+                    .context(NoPhs3Snafu)?
                     .st_val
             }
             Phase::PhsA => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .v_ar_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_a
                     .as_ref()
-                    .context(NoPhsA)?
+                    .context(NoPhsASnafu)?
                     .st_val
             }
             Phase::PhsB => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .v_ar_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_b
                     .as_ref()
-                    .context(NoPhsB)?
+                    .context(NoPhsBSnafu)?
                     .st_val
             }
             Phase::PhsC => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .v_ar_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_c
                     .as_ref()
-                    .context(NoPhsC)?
+                    .context(NoPhsCSnafu)?
                     .st_val
             }
         })
@@ -295,61 +295,61 @@ impl CapBankStatusExt for CapBankStatusProfile {
             Phase::Phs3 => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .vol_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs3
                     .as_ref()
-                    .context(NoPhs3)?
+                    .context(NoPhs3Snafu)?
                     .st_val
             }
             Phase::PhsA => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .vol_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_a
                     .as_ref()
-                    .context(NoPhsA)?
+                    .context(NoPhsASnafu)?
                     .st_val
             }
             Phase::PhsB => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .vol_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_b
                     .as_ref()
-                    .context(NoPhsB)?
+                    .context(NoPhsBSnafu)?
                     .st_val
             }
             Phase::PhsC => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .vol_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_c
                     .as_ref()
-                    .context(NoPhsC)?
+                    .context(NoPhsCSnafu)?
                     .st_val
             }
         })
@@ -360,61 +360,61 @@ impl CapBankStatusExt for CapBankStatusProfile {
             Phase::Phs3 => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .amp_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs3
                     .as_ref()
-                    .context(NoPhs3)?
+                    .context(NoPhs3Snafu)?
                     .st_val
             }
             Phase::PhsA => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .amp_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_a
                     .as_ref()
-                    .context(NoPhsA)?
+                    .context(NoPhsASnafu)?
                     .st_val
             }
             Phase::PhsB => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .amp_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_b
                     .as_ref()
-                    .context(NoPhsB)?
+                    .context(NoPhsBSnafu)?
                     .st_val
             }
             Phase::PhsC => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .amp_lmt
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_c
                     .as_ref()
-                    .context(NoPhsC)?
+                    .context(NoPhsCSnafu)?
                     .st_val
             }
         })
@@ -425,61 +425,61 @@ impl CapBankStatusExt for CapBankStatusProfile {
             Phase::Phs3 => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .dir_rev
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs3
                     .as_ref()
-                    .context(NoPhs3)?
+                    .context(NoPhs3Snafu)?
                     .st_val
             }
             Phase::PhsA => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .dir_rev
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_a
                     .as_ref()
-                    .context(NoPhsA)?
+                    .context(NoPhsASnafu)?
                     .st_val
             }
             Phase::PhsB => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .dir_rev
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_b
                     .as_ref()
-                    .context(NoPhsB)?
+                    .context(NoPhsBSnafu)?
                     .st_val
             }
             Phase::PhsC => {
                 self.cap_bank_status
                     .as_ref()
-                    .context(NoCapBankStatus)?
+                    .context(NoCapBankStatusSnafu)?
                     .cap_bank_event_and_status_ypsh
                     .as_ref()
-                    .context(NoCapBankEventAndStatusYpsh)?
+                    .context(NoCapBankEventAndStatusYpshSnafu)?
                     .dir_rev
                     .as_ref()
-                    .context(NoValue)?
+                    .context(NoValueSnafu)?
                     .phs_c
                     .as_ref()
-                    .context(NoPhsC)?
+                    .context(NoPhsCSnafu)?
                     .st_val
             }
         })
@@ -490,13 +490,13 @@ impl CapBankStatusExt for CapBankStatusProfile {
             match self
                 .cap_bank_status
                 .as_ref()
-                .context(NoCapBankStatus)?
+                .context(NoCapBankStatusSnafu)?
                 .cap_bank_event_and_status_ypsh
                 .as_ref()
-                .context(NoCapBankEventAndStatusYpsh)?
+                .context(NoCapBankEventAndStatusYpshSnafu)?
                 .ctl_mode
                 .as_ref()
-                .context(NoValue)?
+                .context(NoValueSnafu)?
                 .value
             {
                 1 => ControlModeKind::Auto,

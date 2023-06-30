@@ -16,7 +16,7 @@ impl OpenFMBExtEvent for ResourceEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?)
+            .context(NoEventMessageInfoSnafu)?)
     }
 }
 
@@ -29,10 +29,10 @@ impl OpenFMBExt for ResourceEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?
+            .context(NoEventMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -44,22 +44,22 @@ impl OpenFMBExt for ResourceEventProfile {
             &self
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }

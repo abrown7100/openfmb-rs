@@ -16,7 +16,7 @@ impl OpenFMBExtStatus for RegulatorStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -25,16 +25,16 @@ impl OpenFMBExt for RegulatorStatusProfile {
         match self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".into()),
@@ -51,10 +51,10 @@ impl OpenFMBExt for RegulatorStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -66,29 +66,29 @@ impl OpenFMBExt for RegulatorStatusProfile {
             &self
                 .regulator_system
                 .as_ref()
-                .context(NoRegulatorSystem)?
+                .context(NoRegulatorSystemSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .regulator_system
             .as_ref()
-            .context(NoRegulatorSystem)?
+            .context(NoRegulatorSystemSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -119,19 +119,19 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .tap_pos
             .as_ref()
-            .context(NoTapPos)?
+            .context(NoTapPosSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)?
+            .context(NoPhs3Snafu)?
             .st_val)
     }
 
@@ -139,19 +139,19 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .tap_pos
             .as_ref()
-            .context(NoTapPos)?
+            .context(NoTapPosSnafu)?
             .phs_a
             .as_ref()
-            .context(NoPhsA)?
+            .context(NoPhsASnafu)?
             .st_val)
     }
 
@@ -159,19 +159,19 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .tap_pos
             .as_ref()
-            .context(NoTapPos)?
+            .context(NoTapPosSnafu)?
             .phs_b
             .as_ref()
-            .context(NoPhsB)?
+            .context(NoPhsBSnafu)?
             .st_val)
     }
 
@@ -179,19 +179,19 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .tap_pos
             .as_ref()
-            .context(NoTapPos)?
+            .context(NoTapPosSnafu)?
             .phs_c
             .as_ref()
-            .context(NoPhsC)?
+            .context(NoPhsCSnafu)?
             .st_val)
     }
 
@@ -199,19 +199,19 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .vol_lmt_hi
             .as_ref()
-            .context(NoVolLmtHi)?
+            .context(NoVolLmtHiSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)?
+            .context(NoPhs3Snafu)?
             .st_val)
     }
 
@@ -219,19 +219,19 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .vol_lmt_lo
             .as_ref()
-            .context(NoVolLmtLo)?
+            .context(NoVolLmtLoSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)?
+            .context(NoPhs3Snafu)?
             .st_val)
     }
 
@@ -239,19 +239,19 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .bnd_wid_hi
             .as_ref()
-            .context(NoBndWidHi)?
+            .context(NoBndWidHiSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)?
+            .context(NoPhs3Snafu)?
             .st_val)
     }
 
@@ -259,19 +259,19 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .bnd_wid_lo
             .as_ref()
-            .context(NoBndWidLo)?
+            .context(NoBndWidLoSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)?
+            .context(NoPhs3Snafu)?
             .st_val)
     }
 
@@ -279,16 +279,16 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .tap_op_err
             .as_ref()
-            .context(NoTapOpErr)?
+            .context(NoTapOpErrSnafu)?
             .st_val)
     }
 
@@ -296,16 +296,16 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .logical_node_for_event_and_status
             .as_ref()
-            .context(NoLogicalNodeForEventAndStatus)?
+            .context(NoLogicalNodeForEventAndStatusSnafu)?
             .hot_line_tag
             .as_ref()
-            .context(NoHotLineTag)?
+            .context(NoHotLineTagSnafu)?
             .st_val)
     }
 
@@ -313,16 +313,16 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
         Ok(self
             .regulator_status
             .as_ref()
-            .context(NoRegulatorStatus)?
+            .context(NoRegulatorStatusSnafu)?
             .regulator_event_and_status_ancr
             .as_ref()
-            .context(NoRegulatorEventAndStatusAncr)?
+            .context(NoRegulatorEventAndStatusAncrSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .voltage_set_point_enabled
             .as_ref()
-            .context(NoVoltageSetPointEnabled)?
+            .context(NoVoltageSetPointEnabledSnafu)?
             .st_val)
     }
 
@@ -331,16 +331,16 @@ impl RegulatorStatusExt for RegulatorStatusProfile {
             match self
                 .regulator_status
                 .as_ref()
-                .context(NoRegulatorStatus)?
+                .context(NoRegulatorStatusSnafu)?
                 .regulator_event_and_status_ancr
                 .as_ref()
-                .context(NoRegulatorEventAndStatusAncr)?
+                .context(NoRegulatorEventAndStatusAncrSnafu)?
                 .point_status
                 .as_ref()
-                .context(NoPointStatus)?
+                .context(NoPointStatusSnafu)?
                 .state
                 .as_ref()
-                .context(NoState)?
+                .context(NoStateSnafu)?
                 .value
             {
                 1 => StateKind::Off,

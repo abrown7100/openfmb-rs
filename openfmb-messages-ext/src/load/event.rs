@@ -16,7 +16,7 @@ impl OpenFMBExtEvent for LoadEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?)
+            .context(NoEventMessageInfoSnafu)?)
     }
 }
 
@@ -25,19 +25,19 @@ impl OpenFMBExt for LoadEventProfile {
         match self
             .load_event
             .as_ref()
-            .context(NoLoadEvent)?
+            .context(NoLoadEventSnafu)?
             .load_event_zgld
             .as_ref()
-            .context(NoLoadEventZGld)?
+            .context(NoLoadEventZGldSnafu)?
             .load_event_and_status_zgld
             .as_ref()
-            .context(NoLoadEventAndStatusZGld)?
+            .context(NoLoadEventAndStatusZGldSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".into()),
@@ -54,10 +54,10 @@ impl OpenFMBExt for LoadEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?
+            .context(NoEventMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -69,28 +69,28 @@ impl OpenFMBExt for LoadEventProfile {
             &self
                 .energy_consumer
                 .as_ref()
-                .context(NoEnergyConsumer)?
+                .context(NoEnergyConsumerSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .energy_consumer
             .as_ref()
-            .context(NoEnergyConsumer)?
+            .context(NoEnergyConsumerSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }

@@ -16,7 +16,7 @@ impl OpenFMBExtReading for RegulatorReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoReadingMessageInfo)?)
+            .context(NoReadingMessageInfoSnafu)?)
     }
 }
 
@@ -29,10 +29,10 @@ impl OpenFMBExt for RegulatorReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoReadingMessageInfo)?
+            .context(NoReadingMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -44,29 +44,29 @@ impl OpenFMBExt for RegulatorReadingProfile {
             &self
                 .regulator_system
                 .as_ref()
-                .context(NoRegulatorSystem)?
+                .context(NoRegulatorSystemSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .regulator_system
             .as_ref()
-            .context(NoRegulatorSystem)?
+            .context(NoRegulatorSystemSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -85,19 +85,19 @@ impl RegulatorReadingExt for RegulatorReadingProfile {
                 .regulator_reading
                 .get(index)
                 .as_ref()
-                .context(NoRegulatorReading)?
+                .context(NoRegulatorReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .w
                 .as_ref()
-                .context(NoW)?
+                .context(NoWSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRegulatorReading)
@@ -110,19 +110,19 @@ impl RegulatorReadingExt for RegulatorReadingProfile {
                 .regulator_reading
                 .get(index)
                 .as_ref()
-                .context(NoRegulatorReading)?
+                .context(NoRegulatorReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .v_ar
                 .as_ref()
-                .context(NoW)?
+                .context(NoWSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRegulatorReading)
@@ -135,19 +135,19 @@ impl RegulatorReadingExt for RegulatorReadingProfile {
                 .regulator_reading
                 .first()
                 .as_ref()
-                .context(NoRegulatorReading)?
+                .context(NoRegulatorReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .ph_v
                 .as_ref()
-                .context(NoValue)?
+                .context(NoValueSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRegulatorReading)
@@ -160,19 +160,19 @@ impl RegulatorReadingExt for RegulatorReadingProfile {
                 .regulator_reading
                 .first()
                 .as_ref()
-                .context(NoRegulatorReading)?
+                .context(NoRegulatorReadingSnafu)?
                 .reading_mmxu
                 .as_ref()
-                .context(NoReadingMmxu)?
+                .context(NoReadingMmxuSnafu)?
                 .a
                 .as_ref()
-                .context(NoValue)?
+                .context(NoValueSnafu)?
                 .net
                 .as_ref()
-                .context(NoNet)?
+                .context(NoNetSnafu)?
                 .c_val
                 .as_ref()
-                .context(NoCVal)?
+                .context(NoCValSnafu)?
                 .mag);
         }
         Err(OpenFMBError::NoRegulatorReading)

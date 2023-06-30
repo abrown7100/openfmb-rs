@@ -16,7 +16,7 @@ impl OpenFMBExtEvent for BreakerEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?)
+            .context(NoEventMessageInfoSnafu)?)
     }
 }
 
@@ -25,16 +25,16 @@ impl OpenFMBExt for BreakerEventProfile {
         match self
             .breaker_event
             .as_ref()
-            .context(NoBreakerEvent)?
+            .context(NoBreakerEventSnafu)?
             .status_and_event_xcbr
             .as_ref()
-            .context(NoStatusAndEventXcbr)?
+            .context(NoStatusAndEventXcbrSnafu)?
             .pos
             .as_ref()
-            .context(NoPos)?
+            .context(NoPosSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)
+            .context(NoPhs3Snafu)
         {
             Ok(v) => match v.st_val {
                 0 => Ok("Undefined".into()),
@@ -52,10 +52,10 @@ impl OpenFMBExt for BreakerEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?
+            .context(NoEventMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -67,13 +67,13 @@ impl OpenFMBExt for BreakerEventProfile {
             &self
                 .breaker
                 .as_ref()
-                .context(NoBreaker)?
+                .context(NoBreakerSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {

@@ -16,16 +16,16 @@ impl OpenFMBExt for SwitchStatusProfile {
         match self
             .switch_status
             .as_ref()
-            .context(NoSwitchStatus)?
+            .context(NoSwitchStatusSnafu)?
             .switch_status_xswi
             .as_ref()
-            .context(NoSwitchStatusXswi)?
+            .context(NoSwitchStatusXswiSnafu)?
             .pos
             .as_ref()
-            .context(NoPos)?
+            .context(NoPosSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)
+            .context(NoPhs3Snafu)
         {
             Ok(phs3) => match phs3.st_val {
                 0 => Ok("Undefined".into()),
@@ -43,10 +43,10 @@ impl OpenFMBExt for SwitchStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -58,29 +58,29 @@ impl OpenFMBExt for SwitchStatusProfile {
             &self
                 .protected_switch
                 .as_ref()
-                .context(NoProtectedSwitch)?
+                .context(NoProtectedSwitchSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .protected_switch
             .as_ref()
-            .context(NoProtectedSwitch)?
+            .context(NoProtectedSwitchSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -89,7 +89,7 @@ impl OpenFMBExtStatus for SwitchStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -103,61 +103,61 @@ impl Position for SwitchStatusProfile {
             Phase::Phs3 => {
                 self.switch_status
                     .as_ref()
-                    .context(NoSwitchStatus)?
+                    .context(NoSwitchStatusSnafu)?
                     .switch_status_xswi
                     .as_ref()
-                    .context(NoSwitchStatusXswi)?
+                    .context(NoSwitchStatusXswiSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs3
                     .as_ref()
-                    .context(NoPhs3)?
+                    .context(NoPhs3Snafu)?
                     .st_val
             }
             Phase::PhsA => {
                 self.switch_status
                     .as_ref()
-                    .context(NoSwitchStatus)?
+                    .context(NoSwitchStatusSnafu)?
                     .switch_status_xswi
                     .as_ref()
-                    .context(NoSwitchStatusXswi)?
+                    .context(NoSwitchStatusXswiSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_a
                     .as_ref()
-                    .context(NoPhsA)?
+                    .context(NoPhsASnafu)?
                     .st_val
             }
             Phase::PhsB => {
                 self.switch_status
                     .as_ref()
-                    .context(NoSwitchStatus)?
+                    .context(NoSwitchStatusSnafu)?
                     .switch_status_xswi
                     .as_ref()
-                    .context(NoSwitchStatusXswi)?
+                    .context(NoSwitchStatusXswiSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_b
                     .as_ref()
-                    .context(NoPhsB)?
+                    .context(NoPhsBSnafu)?
                     .st_val
             }
             Phase::PhsC => {
                 self.switch_status
                     .as_ref()
-                    .context(NoSwitchStatus)?
+                    .context(NoSwitchStatusSnafu)?
                     .switch_status_xswi
                     .as_ref()
-                    .context(NoSwitchStatusXswi)?
+                    .context(NoSwitchStatusXswiSnafu)?
                     .pos
                     .as_ref()
-                    .context(NoPos)?
+                    .context(NoPosSnafu)?
                     .phs_c
                     .as_ref()
-                    .context(NoPhsC)?
+                    .context(NoPhsCSnafu)?
                     .st_val
             }
         };

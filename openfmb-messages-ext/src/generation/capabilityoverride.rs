@@ -21,10 +21,10 @@ impl OpenFMBExt for GenerationCapabilityOverrideProfile {
         Ok(self
             .capability_message_info
             .as_ref()
-            .context(NoMessageInfo)?
+            .context(NoMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -36,28 +36,28 @@ impl OpenFMBExt for GenerationCapabilityOverrideProfile {
             &self
                 .generating_unit
                 .as_ref()
-                .context(NoGeneratingUnit)?
+                .context(NoGeneratingUnitSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .generating_unit
             .as_ref()
-            .context(NoGeneratingUnit)?
+            .context(NoGeneratingUnitSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }

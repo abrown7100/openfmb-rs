@@ -18,19 +18,19 @@ impl OpenFMBExt for SolarStatusProfile {
         match self
             .solar_status
             .as_ref()
-            .context(NoSolarStatus)?
+            .context(NoSolarStatusSnafu)?
             .solar_status_zgen
             .as_ref()
-            .context(NoSolarStatusZGen)?
+            .context(NoSolarStatusZGenSnafu)?
             .solar_event_and_status_zgen
             .as_ref()
-            .context(NoSolarEventAndStatusZGen)?
+            .context(NoSolarEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".to_string()),
@@ -47,10 +47,10 @@ impl OpenFMBExt for SolarStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -62,29 +62,29 @@ impl OpenFMBExt for SolarStatusProfile {
             &self
                 .solar_inverter
                 .as_ref()
-                .context(NoSolarInverter)?
+                .context(NoSolarInverterSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .solar_inverter
             .as_ref()
-            .context(NoSolarInverter)?
+            .context(NoSolarInverterSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -93,7 +93,7 @@ impl OpenFMBExtStatus for SolarStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -107,19 +107,19 @@ impl SolarStatusExt for SolarStatusProfile {
         Ok(self
             .solar_status
             .as_ref()
-            .context(NoSolarStatus)?
+            .context(NoSolarStatusSnafu)?
             .solar_status_zgen
             .as_ref()
-            .context(NoSolarStatusZGen)?
+            .context(NoSolarStatusZGenSnafu)?
             .solar_event_and_status_zgen
             .as_ref()
-            .context(NoSolarEventAndStatusZGen)?
+            .context(NoSolarEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)?
+            .context(NoStateSnafu)?
             .value())
     }
 
@@ -127,16 +127,16 @@ impl SolarStatusExt for SolarStatusProfile {
         Ok(self
             .solar_status
             .as_ref()
-            .context(NoSolarStatus)?
+            .context(NoSolarStatusSnafu)?
             .solar_status_zgen
             .as_ref()
-            .context(NoSolarStatusZGen)?
+            .context(NoSolarStatusZGenSnafu)?
             .solar_event_and_status_zgen
             .as_ref()
-            .context(NoSolarEventAndStatusZGen)?
+            .context(NoSolarEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .pct_v_droop)
     }
 }

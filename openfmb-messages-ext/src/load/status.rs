@@ -19,19 +19,19 @@ impl OpenFMBExt for LoadStatusProfile {
         match self
             .load_status
             .as_ref()
-            .context(NoLoadStatus)?
+            .context(NoLoadStatusSnafu)?
             .load_status_zgld
             .as_ref()
-            .context(NoLoadStatusZGld)?
+            .context(NoLoadStatusZGldSnafu)?
             .load_event_and_status_zgld
             .as_ref()
-            .context(NoLoadEventAndStatusZGld)?
+            .context(NoLoadEventAndStatusZGldSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".into()),
@@ -48,10 +48,10 @@ impl OpenFMBExt for LoadStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -63,29 +63,29 @@ impl OpenFMBExt for LoadStatusProfile {
             &self
                 .energy_consumer
                 .as_ref()
-                .context(NoEnergyConsumer)?
+                .context(NoEnergyConsumerSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .energy_consumer
             .as_ref()
-            .context(NoEnergyConsumer)?
+            .context(NoEnergyConsumerSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -94,7 +94,7 @@ impl OpenFMBExtStatus for LoadStatusProfile {
         Ok(self
             .status_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -107,19 +107,19 @@ impl LoadStatusExt for LoadStatusProfile {
         Ok(self
             .load_status
             .as_ref()
-            .context(NoLoadStatus)?
+            .context(NoLoadStatusSnafu)?
             .load_status_zgld
             .as_ref()
-            .context(NoLoadStatusZGld)?
+            .context(NoLoadStatusZGldSnafu)?
             .load_event_and_status_zgld
             .as_ref()
-            .context(NoLoadEventAndStatusZGld)?
+            .context(NoLoadEventAndStatusZGldSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)?
+            .context(NoStateSnafu)?
             .value())
     }
 }

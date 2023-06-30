@@ -20,19 +20,19 @@ impl OpenFMBExt for SolarReadingProfile {
         Ok(self
             .solar_reading
             .as_ref()
-            .context(NoSolarReading)?
+            .context(NoSolarReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .w
             .as_ref()
-            .context(NoW)?
+            .context(NoWSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag
             .to_string())
     }
@@ -41,10 +41,10 @@ impl OpenFMBExt for SolarReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?
+            .context(NoStatusMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -56,29 +56,29 @@ impl OpenFMBExt for SolarReadingProfile {
             &self
                 .solar_inverter
                 .as_ref()
-                .context(NoSolarInverter)?
+                .context(NoSolarInverterSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .solar_inverter
             .as_ref()
-            .context(NoSolarInverter)?
+            .context(NoSolarInverterSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -87,7 +87,7 @@ impl OpenFMBExtReading for SolarReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoStatusMessageInfo)?)
+            .context(NoStatusMessageInfoSnafu)?)
     }
 }
 
@@ -101,19 +101,19 @@ impl SolarReadingExt for SolarReadingProfile {
         Ok(self
             .solar_reading
             .as_ref()
-            .context(NoSolarReading)?
+            .context(NoSolarReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .w
             .as_ref()
-            .context(NoW)?
+            .context(NoWSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag)
     }
 
@@ -121,19 +121,19 @@ impl SolarReadingExt for SolarReadingProfile {
         Ok(self
             .solar_reading
             .as_ref()
-            .context(NoSolarReading)?
+            .context(NoSolarReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .v_ar
             .as_ref()
-            .context(NoW)?
+            .context(NoWSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag)
     }
 }

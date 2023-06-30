@@ -90,12 +90,12 @@ pub trait OpenFMBExt {
                 .message_info()?
                 .identified_object
                 .as_ref()
-                .context(error::NoIdentifiedObject)?
+                .context(error::NoIdentifiedObjectSnafu)?
                 .m_rid
                 .as_ref()
-                .context(error::NoMRID)?,
+                .context(error::NoMRIDSnafu)?,
         )
-        .context(error::UuidError)?)
+        .context(error::UuidSnafu)?)
     }
 }
 

@@ -16,7 +16,7 @@ impl OpenFMBExtEvent for RecloserEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?)
+            .context(NoEventMessageInfoSnafu)?)
     }
 }
 
@@ -25,16 +25,16 @@ impl OpenFMBExt for RecloserEventProfile {
         match self
             .recloser_event
             .as_ref()
-            .context(NoRecloserEvent)?
+            .context(NoRecloserEventSnafu)?
             .status_and_event_xcbr
             .as_ref()
-            .context(NoStatusAndEventXcbr)?
+            .context(NoStatusAndEventXcbrSnafu)?
             .pos
             .as_ref()
-            .context(NoPos)?
+            .context(NoPosSnafu)?
             .phs3
             .as_ref()
-            .context(NoPhs3)
+            .context(NoPhs3Snafu)
         {
             Ok(phs3) => match phs3.st_val {
                 0 => Ok("Undefined".into()),
@@ -52,10 +52,10 @@ impl OpenFMBExt for RecloserEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?
+            .context(NoEventMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -67,28 +67,28 @@ impl OpenFMBExt for RecloserEventProfile {
             &self
                 .recloser
                 .as_ref()
-                .context(NoRecloser)?
+                .context(NoRecloserSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .recloser
             .as_ref()
-            .context(NoRecloser)?
+            .context(NoRecloserSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }

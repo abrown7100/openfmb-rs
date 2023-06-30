@@ -16,7 +16,7 @@ impl OpenFMBExtReading for CapBankReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoReadingMessageInfo)?)
+            .context(NoReadingMessageInfoSnafu)?)
     }
 }
 
@@ -29,10 +29,10 @@ impl OpenFMBExt for CapBankReadingProfile {
         Ok(self
             .reading_message_info
             .as_ref()
-            .context(NoReadingMessageInfo)?
+            .context(NoReadingMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -44,29 +44,29 @@ impl OpenFMBExt for CapBankReadingProfile {
             &self
                 .cap_bank_system
                 .as_ref()
-                .context(NoCapBankSystem)?
+                .context(NoCapBankSystemSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .cap_bank_system
             .as_ref()
-            .context(NoCapBankSystem)?
+            .context(NoCapBankSystemSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -85,19 +85,19 @@ impl CapBankReadingExt for CapBankReadingProfile {
         return Ok(self
             .cap_bank_reading
             .as_ref()
-            .context(NoCapBankReading)?
+            .context(NoCapBankReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .w
             .as_ref()
-            .context(NoW)?
+            .context(NoWSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag);
     }
 
@@ -105,19 +105,19 @@ impl CapBankReadingExt for CapBankReadingProfile {
         return Ok(self
             .cap_bank_reading
             .as_ref()
-            .context(NoCapBankReading)?
+            .context(NoCapBankReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .v_ar
             .as_ref()
-            .context(NoW)?
+            .context(NoWSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag);
     }
 
@@ -125,19 +125,19 @@ impl CapBankReadingExt for CapBankReadingProfile {
         return Ok(self
             .cap_bank_reading
             .as_ref()
-            .context(NoCapBankReading)?
+            .context(NoCapBankReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .ph_v
             .as_ref()
-            .context(NoValue)?
+            .context(NoValueSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag);
     }
 
@@ -145,19 +145,19 @@ impl CapBankReadingExt for CapBankReadingProfile {
         return Ok(self
             .cap_bank_reading
             .as_ref()
-            .context(NoCapBankReading)?
+            .context(NoCapBankReadingSnafu)?
             .reading_mmxu
             .as_ref()
-            .context(NoReadingMmxu)?
+            .context(NoReadingMmxuSnafu)?
             .a
             .as_ref()
-            .context(NoValue)?
+            .context(NoValueSnafu)?
             .net
             .as_ref()
-            .context(NoNet)?
+            .context(NoNetSnafu)?
             .c_val
             .as_ref()
-            .context(NoCVal)?
+            .context(NoCValSnafu)?
             .mag);
     }
 }

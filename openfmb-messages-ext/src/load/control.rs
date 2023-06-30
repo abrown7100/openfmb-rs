@@ -58,29 +58,29 @@ impl OpenFMBExt for LoadControlProfile {
             &self
                 .energy_consumer
                 .as_ref()
-                .context(NoEnergyConsumer)?
+                .context(NoEnergyConsumerSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .energy_consumer
             .as_ref()
-            .context(NoEnergyConsumer)?
+            .context(NoEnergyConsumerSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 

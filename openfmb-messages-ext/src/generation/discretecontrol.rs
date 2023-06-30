@@ -20,10 +20,10 @@ impl OpenFMBExt for GenerationDiscreteControlProfile {
         Ok(self
             .control_message_info
             .as_ref()
-            .context(NoControlMessageInfo)?
+            .context(NoControlMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -35,13 +35,13 @@ impl OpenFMBExt for GenerationDiscreteControlProfile {
             &self
                 .generating_unit
                 .as_ref()
-                .context(NoGeneratingUnit)?
+                .context(NoGeneratingUnitSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {

@@ -16,7 +16,7 @@ impl OpenFMBExtEvent for EssEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?)
+            .context(NoEventMessageInfoSnafu)?)
     }
 }
 
@@ -25,19 +25,19 @@ impl OpenFMBExt for EssEventProfile {
         match self
             .ess_event
             .as_ref()
-            .context(NoEssEvent)?
+            .context(NoEssEventSnafu)?
             .ess_event_zgen
             .as_ref()
-            .context(NoEssEventZGen)?
+            .context(NoEssEventZGenSnafu)?
             .e_ss_event_and_status_zgen
             .as_ref()
-            .context(NoEssEventAndStatusZGen)?
+            .context(NoEssEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".into()),
@@ -54,10 +54,10 @@ impl OpenFMBExt for EssEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?
+            .context(NoEventMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -69,13 +69,13 @@ impl OpenFMBExt for EssEventProfile {
             &self
                 .ess
                 .as_ref()
-                .context(NoEss)?
+                .context(NoEssSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {

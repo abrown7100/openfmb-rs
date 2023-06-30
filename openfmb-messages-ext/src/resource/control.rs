@@ -36,23 +36,23 @@ impl OpenFMBExt for ResourceDiscreteControlProfile {
             &self
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 
@@ -350,13 +350,13 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
         Ok(self
             .control_message_info
             .as_ref()
-            .context(NoControlMessageInfo)?
+            .context(NoControlMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?
+            .context(NoMessageInfoSnafu)?
             .identified_object
             .as_ref()
-            .context(NoIdentifiedObject)?
+            .context(NoIdentifiedObjectSnafu)?
             .name
             .clone()
             .unwrap_or("".to_string()))
@@ -366,13 +366,13 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
         Ok(self
             .control_message_info
             .as_ref()
-            .context(NoControlMessageInfo)?
+            .context(NoControlMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?
+            .context(NoMessageInfoSnafu)?
             .identified_object
             .as_ref()
-            .context(NoIdentifiedObject)?
+            .context(NoIdentifiedObjectSnafu)?
             .description
             .clone()
             .unwrap_or("".to_string()))
@@ -382,7 +382,7 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
         Ok(self
             .resource_discrete_control
             .as_ref()
-            .context(NoResourceDiscreteControl)?
+            .context(NoResourceDiscreteControlSnafu)?
             .string_control_ggio
             .clone())
     }
@@ -391,7 +391,7 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
         Ok(self
             .resource_discrete_control
             .as_ref()
-            .context(NoResourceDiscreteControl)?
+            .context(NoResourceDiscreteControlSnafu)?
             .analog_control_ggio
             .clone())
     }
@@ -400,7 +400,7 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
         Ok(self
             .resource_discrete_control
             .as_ref()
-            .context(NoResourceDiscreteControl)?
+            .context(NoResourceDiscreteControlSnafu)?
             .integer_control_ggio
             .clone())
     }
@@ -409,7 +409,7 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
         Ok(self
             .resource_discrete_control
             .as_ref()
-            .context(NoResourceDiscreteControl)?
+            .context(NoResourceDiscreteControlSnafu)?
             .boolean_control_ggio
             .clone())
     }
@@ -421,16 +421,16 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
             if let Ok(name) = item
                 .logical_node
                 .as_ref()
-                .context(NoLogicalNode)?
+                .context(NoLogicalNodeSnafu)?
                 .identified_object
                 .as_ref()
-                .context(NoIdentifiedObject)?
+                .context(NoIdentifiedObjectSnafu)?
                 .name
                 .as_ref()
-                .context(NoName)
+                .context(NoNameSnafu)
             {
                 if key == name.to_string() {
-                    return Ok(item.str_out.as_ref().context(NoVsc)?.ctl_val.clone());
+                    return Ok(item.str_out.as_ref().context(NoVscSnafu)?.ctl_val.clone());
                 }
             }
         }
@@ -445,16 +445,16 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
             if let Ok(name) = item
                 .logical_node
                 .as_ref()
-                .context(NoLogicalNode)?
+                .context(NoLogicalNodeSnafu)?
                 .identified_object
                 .as_ref()
-                .context(NoIdentifiedObject)?
+                .context(NoIdentifiedObjectSnafu)?
                 .name
                 .as_ref()
-                .context(NoName)
+                .context(NoNameSnafu)
             {
                 if key == name.to_string() {
-                    return Ok(item.an_out.as_ref().context(NoControlApc)?.ctl_val);
+                    return Ok(item.an_out.as_ref().context(NoControlApcSnafu)?.ctl_val);
                 }
             }
         }
@@ -469,16 +469,16 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
             if let Ok(name) = item
                 .logical_node
                 .as_ref()
-                .context(NoLogicalNode)?
+                .context(NoLogicalNodeSnafu)?
                 .identified_object
                 .as_ref()
-                .context(NoIdentifiedObject)?
+                .context(NoIdentifiedObjectSnafu)?
                 .name
                 .as_ref()
-                .context(NoName)
+                .context(NoNameSnafu)
             {
                 if key == name.to_string() {
-                    return Ok(item.iscso.as_ref().context(NoControlInc)?.ctl_val);
+                    return Ok(item.iscso.as_ref().context(NoControlIncSnafu)?.ctl_val);
                 }
             }
         }
@@ -493,16 +493,16 @@ impl ResourceControlExt for ResourceDiscreteControlProfile {
             if let Ok(name) = item
                 .logical_node
                 .as_ref()
-                .context(NoLogicalNode)?
+                .context(NoLogicalNodeSnafu)?
                 .identified_object
                 .as_ref()
-                .context(NoIdentifiedObject)?
+                .context(NoIdentifiedObjectSnafu)?
                 .name
                 .as_ref()
-                .context(NoName)
+                .context(NoNameSnafu)
             {
                 if key == name.to_string() {
-                    return Ok(item.spcso.as_ref().context(NoControlSpc)?.ctl_val);
+                    return Ok(item.spcso.as_ref().context(NoControlSpcSnafu)?.ctl_val);
                 }
             }
         }

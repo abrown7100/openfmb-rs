@@ -19,10 +19,10 @@ impl OpenFMBExt for CapBankDiscreteControlProfile {
         Ok(self
             .control_message_info
             .as_ref()
-            .context(NoControlMessageInfo)?
+            .context(NoControlMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -34,29 +34,29 @@ impl OpenFMBExt for CapBankDiscreteControlProfile {
             &self
                 .cap_bank_system
                 .as_ref()
-                .context(NoCapBankSystem)?
+                .context(NoCapBankSystemSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .cap_bank_system
             .as_ref()
-            .context(NoCapBankSystem)?
+            .context(NoCapBankSystemSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
 

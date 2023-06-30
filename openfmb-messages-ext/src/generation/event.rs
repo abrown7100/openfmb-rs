@@ -16,7 +16,7 @@ impl OpenFMBExtEvent for GenerationEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?)
+            .context(NoEventMessageInfoSnafu)?)
     }
 }
 
@@ -25,19 +25,19 @@ impl OpenFMBExt for GenerationEventProfile {
         match self
             .generation_event
             .as_ref()
-            .context(NoGenerationEvent)?
+            .context(NoGenerationEventSnafu)?
             .generation_event_zgen
             .as_ref()
-            .context(NoGenerationEventZGen)?
+            .context(NoGenerationEventZGenSnafu)?
             .generation_event_and_status_zgen
             .as_ref()
-            .context(NoGenerationEventAndStatusZGen)?
+            .context(NoGenerationEventAndStatusZGenSnafu)?
             .point_status
             .as_ref()
-            .context(NoPointStatus)?
+            .context(NoPointStatusSnafu)?
             .state
             .as_ref()
-            .context(NoState)
+            .context(NoStateSnafu)
         {
             Ok(state) => match state.value {
                 0 => Ok("Undefined".into()),
@@ -54,10 +54,10 @@ impl OpenFMBExt for GenerationEventProfile {
         Ok(self
             .event_message_info
             .as_ref()
-            .context(NoEventMessageInfo)?
+            .context(NoEventMessageInfoSnafu)?
             .message_info
             .as_ref()
-            .context(NoMessageInfo)?)
+            .context(NoMessageInfoSnafu)?)
     }
 
     fn message_type(&self) -> OpenFMBResult<String> {
@@ -69,28 +69,28 @@ impl OpenFMBExt for GenerationEventProfile {
             &self
                 .generating_unit
                 .as_ref()
-                .context(NoGeneratingUnit)?
+                .context(NoGeneratingUnitSnafu)?
                 .conducting_equipment
                 .as_ref()
-                .context(NoConductingEquipment)?
+                .context(NoConductingEquipmentSnafu)?
                 .m_rid,
         )
-        .context(UuidError)?)
+        .context(UuidSnafu)?)
     }
 
     fn device_name(&self) -> OpenFMBResult<String> {
         Ok(self
             .generating_unit
             .as_ref()
-            .context(NoGeneratingUnit)?
+            .context(NoGeneratingUnitSnafu)?
             .conducting_equipment
             .as_ref()
-            .context(NoConductingEquipment)?
+            .context(NoConductingEquipmentSnafu)?
             .named_object
             .as_ref()
-            .context(NoNamedObject)?
+            .context(NoNamedObjectSnafu)?
             .name
             .clone()
-            .context(NoName)?)
+            .context(NoNameSnafu)?)
     }
 }
