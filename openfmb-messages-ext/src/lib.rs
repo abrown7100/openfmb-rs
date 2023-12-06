@@ -64,6 +64,21 @@ pub trait ReadingProfileExt {
     fn a_net_load_side(&self) -> OpenFMBResult<f64> {
         Err(OpenFMBError::NotImplented)
     }
+
+    fn a_phs_a(&self) -> OpenFMBResult<f64>;
+    fn a_phs_a_load_side(&self) -> OpenFMBResult<f64> {
+        Err(OpenFMBError::NotImplented)
+    }
+
+    fn a_phs_b(&self) -> OpenFMBResult<f64>;
+    fn a_phs_b_load_side(&self) -> OpenFMBResult<f64> {
+        Err(OpenFMBError::NotImplented)
+    }
+
+    fn a_phs_c(&self) -> OpenFMBResult<f64>;
+    fn a_phs_c_load_side(&self) -> OpenFMBResult<f64> {
+        Err(OpenFMBError::NotImplented)
+    }
 }
 pub trait StatusProfileExt {}
 

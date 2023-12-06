@@ -169,4 +169,64 @@ impl ReadingProfileExt for GenerationReadingProfile {
             .context(NoCVal)?
             .mag)
     }
+
+    fn a_phs_a(&self) -> OpenFMBResult<f64> {
+        Ok(self
+            .generation_reading
+            .as_ref()
+            .context(NoGenerationReading)?
+            .reading_mmxu
+            .as_ref()
+            .context(NoReadingMmxu)?
+            .a
+            .as_ref()
+            .context(NoW)?
+            .phsA
+            .as_ref()
+            .context(NoNet)?
+            .c_val
+            .as_ref()
+            .context(NoCVal)?
+            .mag)
+    }
+
+    fn a_phs_b(&self) -> OpenFMBResult<f64> {
+        Ok(self
+            .generation_reading
+            .as_ref()
+            .context(NoGenerationReading)?
+            .reading_mmxu
+            .as_ref()
+            .context(NoReadingMmxu)?
+            .a
+            .as_ref()
+            .context(NoW)?
+            .phsB
+            .as_ref()
+            .context(NoNet)?
+            .c_val
+            .as_ref()
+            .context(NoCVal)?
+            .mag)
+    }
+
+    fn a_phs_c(&self) -> OpenFMBResult<f64> {
+        Ok(self
+            .generation_reading
+            .as_ref()
+            .context(NoGenerationReading)?
+            .reading_mmxu
+            .as_ref()
+            .context(NoReadingMmxu)?
+            .a
+            .as_ref()
+            .context(NoW)?
+            .phsC
+            .as_ref()
+            .context(NoNet)?
+            .c_val
+            .as_ref()
+            .context(NoCVal)?
+            .mag)
+    }
 }

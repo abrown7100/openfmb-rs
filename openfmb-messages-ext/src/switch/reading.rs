@@ -283,4 +283,76 @@ impl ReadingProfileExt for SwitchReadingProfile {
         }
         Err(OpenFMBError::NoSwitchReading)
     }
+
+    fn a_phs_a(&self) -> OpenFMBResult<f64> {
+        if !self.switch_reading.is_empty() {
+            return Ok(self
+                .switch_reading
+                .first()
+                .as_ref()
+                .context(NoSwitchReading)?
+                .reading_mmxu
+                .as_ref()
+                .context(NoReadingMmxu)?
+                .a
+                .as_ref()
+                .context(NoValue)?
+                .phsA
+                .as_ref()
+                .context(NoNet)?
+                .c_val
+                .as_ref()
+                .context(NoCVal)?
+                .mag);
+        }
+        Err(OpenFMBError::NoSwitchReading)
+    }
+
+    fn a_phs_b(&self) -> OpenFMBResult<f64> {
+        if !self.switch_reading.is_empty() {
+            return Ok(self
+                .switch_reading
+                .first()
+                .as_ref()
+                .context(NoSwitchReading)?
+                .reading_mmxu
+                .as_ref()
+                .context(NoReadingMmxu)?
+                .a
+                .as_ref()
+                .context(NoValue)?
+                .phsB
+                .as_ref()
+                .context(NoNet)?
+                .c_val
+                .as_ref()
+                .context(NoCVal)?
+                .mag);
+        }
+        Err(OpenFMBError::NoSwitchReading)
+    }
+
+    fn a_phs_c(&self) -> OpenFMBResult<f64> {
+        if !self.switch_reading.is_empty() {
+            return Ok(self
+                .switch_reading
+                .first()
+                .as_ref()
+                .context(NoSwitchReading)?
+                .reading_mmxu
+                .as_ref()
+                .context(NoReadingMmxu)?
+                .a
+                .as_ref()
+                .context(NoValue)?
+                .phsC
+                .as_ref()
+                .context(NoNet)?
+                .c_val
+                .as_ref()
+                .context(NoCVal)?
+                .mag);
+        }
+        Err(OpenFMBError::NoSwitchReading)
+    }
 }

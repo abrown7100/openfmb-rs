@@ -182,7 +182,7 @@ impl ReadingProfileExt for MeterReadingProfile {
             .a
             .as_ref()
             .context(NoValue)?
-            .net
+            .phsA
             .as_ref()
             .context(NoNet)?
             .c_val
@@ -202,7 +202,7 @@ impl ReadingProfileExt for MeterReadingProfile {
             .a
             .as_ref()
             .context(NoValue)?
-            .net
+            .phsB
             .as_ref()
             .context(NoNet)?
             .c_val
@@ -222,7 +222,7 @@ impl ReadingProfileExt for MeterReadingProfile {
             .a
             .as_ref()
             .context(NoValue)?
-            .net
+            .phsC
             .as_ref()
             .context(NoNet)?
             .c_val

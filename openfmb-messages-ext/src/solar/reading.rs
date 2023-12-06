@@ -170,6 +170,66 @@ impl ReadingProfileExt for SolarReadingProfile {
             .context(NoCVal)?
             .mag)
     }
+
+    fn a_phs_a(&self) -> OpenFMBResult<f64> {
+        Ok(self
+            .solar_reading
+            .as_ref()
+            .context(NoSolarReading)?
+            .reading_mmxu
+            .as_ref()
+            .context(NoReadingMmxu)?
+            .a
+            .as_ref()
+            .context(NoValue)?
+            .phsA
+            .as_ref()
+            .context(NoNet)?
+            .c_val
+            .as_ref()
+            .context(NoCVal)?
+            .mag)
+    }
+
+    fn a_phs_b(&self) -> OpenFMBResult<f64> {
+        Ok(self
+            .solar_reading
+            .as_ref()
+            .context(NoSolarReading)?
+            .reading_mmxu
+            .as_ref()
+            .context(NoReadingMmxu)?
+            .a
+            .as_ref()
+            .context(NoValue)?
+            .phsB
+            .as_ref()
+            .context(NoNet)?
+            .c_val
+            .as_ref()
+            .context(NoCVal)?
+            .mag)
+    }
+
+    fn a_phs_c(&self) -> OpenFMBResult<f64> {
+        Ok(self
+            .solar_reading
+            .as_ref()
+            .context(NoSolarReading)?
+            .reading_mmxu
+            .as_ref()
+            .context(NoReadingMmxu)?
+            .a
+            .as_ref()
+            .context(NoValue)?
+            .phsB
+            .as_ref()
+            .context(NoNet)?
+            .c_val
+            .as_ref()
+            .context(NoCVal)?
+            .mag)
+    }
 }
 
 impl OpenFMBReading for SolarReadingProfile {}
