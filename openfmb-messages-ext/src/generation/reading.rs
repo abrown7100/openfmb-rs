@@ -181,7 +181,7 @@ impl ReadingProfileExt for GenerationReadingProfile {
             .a
             .as_ref()
             .context(NoW)?
-            .phsA
+            .phs_a
             .as_ref()
             .context(NoNet)?
             .c_val
@@ -201,7 +201,7 @@ impl ReadingProfileExt for GenerationReadingProfile {
             .a
             .as_ref()
             .context(NoW)?
-            .phsB
+            .phs_b
             .as_ref()
             .context(NoNet)?
             .c_val
@@ -221,7 +221,7 @@ impl ReadingProfileExt for GenerationReadingProfile {
             .a
             .as_ref()
             .context(NoW)?
-            .phsC
+            .phs_c
             .as_ref()
             .context(NoNet)?
             .c_val

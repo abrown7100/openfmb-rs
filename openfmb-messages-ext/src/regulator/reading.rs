@@ -276,7 +276,7 @@ impl ReadingProfileExt for RegulatorReadingProfile {
                 .a
                 .as_ref()
                 .context(NoValue)?
-                .phsA
+                .phs_a
                 .as_ref()
                 .context(NoNet)?
                 .c_val
@@ -300,7 +300,7 @@ impl ReadingProfileExt for RegulatorReadingProfile {
                 .a
                 .as_ref()
                 .context(NoValue)?
-                .phsB
+                .phs_b
                 .as_ref()
                 .context(NoNet)?
                 .c_val
@@ -324,7 +324,7 @@ impl ReadingProfileExt for RegulatorReadingProfile {
                 .a
                 .as_ref()
                 .context(NoValue)?
-                .phsC
+                .phs_c
                 .as_ref()
                 .context(NoNet)?
                 .c_val
